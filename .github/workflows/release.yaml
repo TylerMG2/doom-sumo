@@ -1,6 +1,10 @@
 name: Release
 
 on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+*"
+
   # Trigger this workflow on a manual workflow dispatch.
   workflow_dispatch:
     inputs:
