@@ -6,7 +6,8 @@ edition = "2024"
 
 [dependencies]
 bevy = { version = "0.16", features = ["wayland"] }
-rand = "0.8"
+bevy_ggrs = { version = "0.18", features = ["wasm-bindgen"] }
+bevy_matchbox = { version = "0.12", features = ["ggrs"] }
 # Compile low-severity logs out of native builds for performance.
 log = { version = "0.4", features = [
     "max_level_debug",
