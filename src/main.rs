@@ -124,7 +124,7 @@ fn move_players(
 
 // Netcode
 fn start_matchbox_socket(mut commands: Commands) {
-    let room_url = "ws://192.168.0.150:3536/doom_sumo?next=2";
+    let room_url = "ws://38.179.101.216:3536/doom_sumo?next=2";
     info!("connecting to matchbox server: {room_url}");
     commands.insert_resource(MatchboxSocket::from(
         WebRtcSocketBuilder::new(room_url)
