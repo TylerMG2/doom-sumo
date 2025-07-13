@@ -18,6 +18,9 @@
         pkgs = import nixpkgs {
           inherit system;
           overlays = [rust-overlay.overlays.default];
+          config = {
+            allowUnfree = true;
+          };
         };
 
         rustToolchain = pkgs.rust-bin.stable.latest.default.override {
@@ -41,6 +44,19 @@
             pkgs.alsa-lib
             pkgs.rust-analyzer
             pkgs.udev
+
+            # Keyboard input
+            pkgs.libxkbcommon
+
+            # Required by wayland-sys crate (via bevy)
+            pkgs.wayland.dev
+
+            # Graphics stuff
+            pkgs.vulkan-loader
+            pkgs.vulkan-tools
+            pkgs.vulkan-validation-layers
+
+            pkgs.linuxPackages.nvidia_x11
 
             # Add wasm-server-runner from source
             (rustPlatform.buildRustPackage {
@@ -90,6 +106,17 @@
               doCheck = false; # No network access in nix builds
             })
           ];
+
+          LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+            pkgs.vulkan-loader
+            pkgs.linuxPackages.nvidia_x11
+            pkgs.udev
+            pkgs.openssl
+            pkgs.alsa-lib
+            pkgs.wayland
+            pkgs.libxkbcommon
+          ];
+
           shellHook = ''
             echo "Welcome to the doomsumo development shell"
           '';
