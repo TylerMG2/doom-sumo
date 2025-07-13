@@ -18,9 +18,7 @@
         pkgs = import nixpkgs {
           inherit system;
           overlays = [rust-overlay.overlays.default];
-          config = {
-            allowUnfree = true;
-          };
+          config.allowUnfree = true;
         };
 
         rustToolchain = pkgs.rust-bin.stable.latest.default.override {
